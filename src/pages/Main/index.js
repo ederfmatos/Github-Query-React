@@ -4,7 +4,7 @@ import { Title } from './styles';
 
 export default function Main() {
   return (
-    <Title error={false}>
+    <Title error={true}>
       Main
       <small>Menor</small>
     </Title>
