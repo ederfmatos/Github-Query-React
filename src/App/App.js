@@ -3,8 +3,10 @@ import './App.scss';
 
 // import {  } from '../components';
 
+import Routes from '../routes';
+
 function App() {
-  return <div className="App"></div>;
+  return <Routes />;
 }
 
 export default App;
