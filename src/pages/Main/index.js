@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
 
 import { Container, Form, SubmitButton, List } from './styles';
@@ -35,12 +36,13 @@ export default class Main extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
-    this.setState({ loading: true });
     const { newRepo, repositories } = this.state;
 
     if (!newRepo) {
       return;
     }
+
+    this.setState({ loading: true });
 
     const { data } = await api.get(`/repos/${newRepo}`).catch(e => {
       alert('Repositório não encontrado');
@@ -48,6 +50,7 @@ export default class Main extends Component {
     });
 
     if (!data) {
+      this.setState({ loading: false });
       return;
     }
 
@@ -90,10 +93,12 @@ export default class Main extends Component {
         </Form>
 
         <List>
-          {repositories.map(repository => (
-            <li key={repository.name}>
-              <span>{repository.name}</span>
-              <a href="">Detalhes</a>
+          {repositories.map(({ name }) => (
+            <li key={name}>
+              <span>{name}</span>
+              <Link to={`/repository/${encodeURIComponent(name)}`}>
+                Detalhes
+              </Link>
             </li>
           ))}
         </List>
