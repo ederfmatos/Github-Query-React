@@ -38,10 +38,18 @@ export default class Main extends Component {
     this.setState({ loading: true });
     const { newRepo, repositories } = this.state;
 
+    if (!newRepo) {
+      return;
+    }
+
     const { data } = await api.get(`/repos/${newRepo}`).catch(e => {
-      console.error(e);
-      return { data: {} };
+      alert('Repositório não encontrado');
+      return {};
     });
+
+    if (!data) {
+      return;
+    }
 
     const repo = {
       name: data.full_name,
